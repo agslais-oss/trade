@@ -1,0 +1,59 @@
+name: ETFTrader
+options:
+  bundleIdPrefix: com.etftrader
+  deploymentTarget:
+    iOS: "16.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  ETFTrader:
+    type: application
+    platform: iOS
+    sources:
+      - path: ETFTrader
+    info:
+      path: ETFTrader/Resources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.etftrader.app
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_FILE: ETFTrader/Resources/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_EMIT_LOC_STRINGS: YES
+        ENABLE_PREVIEWS: YES
+
+  ETFTraderTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ETFTraderTests
+    dependencies:
+      - target: ETFTrader
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.etftrader.app.tests
+        BUNDLE_LOADER: $(TEST_HOST)
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/ETFTrader.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ETFTrader
+
+schemes:
+  ETFTrader:
+    build:
+      targets:
+        ETFTrader: all
+        ETFTraderTests: [test]
+    test:
+      targets:
+        - ETFTraderTests
+    run:
+      config: Debug
+    archive:
+      config: Release
